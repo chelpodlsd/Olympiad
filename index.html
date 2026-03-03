@@ -1,0 +1,295 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Международная олимпиада</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        }
+        
+        body {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            min-height: 100vh;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            padding: 20px;
+        }
+        
+        .container {
+            background: white;
+            border-radius: 20px;
+            padding: 40px;
+            max-width: 600px;
+            width: 100%;
+            box-shadow: 0 20px 60px rgba(0,0,0,0.3);
+            animation: slideIn 1s ease-out;
+        }
+        
+        @keyframes slideIn {
+            from {
+                opacity: 0;
+                transform: translateY(-30px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+        
+        h1 {
+            text-align: center;
+            color: #4834d4;
+            font-size: 42px;
+            margin-bottom: 20px;
+            text-shadow: 2px 2px 4px rgba(0,0,0,0.1);
+            animation: glow 2s ease-in-out infinite;
+        }
+        
+        @keyframes glow {
+            0%, 100% { text-shadow: 2px 2px 4px rgba(0,0,0,0.1); }
+            50% { text-shadow: 0 0 20px #4834d4, 0 0 40px #764ba2; }
+        }
+        
+        .form-group {
+            margin-bottom: 20px;
+        }
+        
+        label {
+            display: block;
+            margin-bottom: 5px;
+            color: #333;
+            font-weight: bold;
+        }
+        
+        input {
+            width: 100%;
+            padding: 12px;
+            border: 2px solid #ddd;
+            border-radius: 10px;
+            font-size: 16px;
+            transition: all 0.3s;
+        }
+        
+        input:focus {
+            border-color: #4834d4;
+            outline: none;
+            box-shadow: 0 0 10px rgba(72, 52, 212, 0.3);
+        }
+        
+        button {
+            width: 100%;
+            padding: 15px;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            border: none;
+            border-radius: 10px;
+            font-size: 18px;
+            font-weight: bold;
+            cursor: pointer;
+            transition: transform 0.3s, box-shadow 0.3s;
+        }
+        
+        button:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 10px 20px rgba(0,0,0,0.2);
+        }
+        
+        .result {
+            margin-top: 30px;
+            padding: 20px;
+            border-radius: 10px;
+            text-align: center;
+            font-size: 24px;
+            font-weight: bold;
+            display: none;
+        }
+        
+        .confetti {
+            position: fixed;
+            width: 10px;
+            height: 10px;
+            background: #f1c40f;
+            animation: fall 3s linear infinite;
+            pointer-events: none;
+            z-index: 1000;
+        }
+        
+        @keyframes fall {
+            to {
+                transform: translateY(100vh) rotate(720deg);
+            }
+        }
+        
+        .rainbow-text {
+            background: linear-gradient(to right, red, orange, yellow, green, blue, indigo, violet);
+            -webkit-background-clip: text;
+            background-clip: text;
+            color: transparent;
+            animation: rainbow 3s linear infinite;
+        }
+        
+        @keyframes rainbow {
+            0% { filter: hue-rotate(0deg); }
+            100% { filter: hue-rotate(360deg); }
+        }
+        
+        .winner {
+            background: linear-gradient(135deg, #f6d365 0%, #fda085 100%);
+            color: #fff;
+            text-shadow: 2px 2px 4px rgba(0,0,0,0.3);
+            animation: pulse 1s ease-in-out infinite;
+        }
+        
+        @keyframes pulse {
+            0%, 100% { transform: scale(1); }
+            50% { transform: scale(1.02); }
+        }
+        
+        .loser {
+            background: #333;
+            color: #fff;
+        }
+        
+        .emoji-large {
+            font-size: 48px;
+            margin: 10px 0;
+        }
+        
+        .gift-note {
+            font-size: 18px;
+            margin-top: 15px;
+            padding: 10px;
+            background: rgba(255,255,255,0.2);
+            border-radius: 10px;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>🏆 МЕЖДУНАРОДНАЯ ОЛИМПИАДА 🏆</h1>
+        
+        <div class="form-group">
+            <label>ФИО:</label>
+            <input type="text" id="fio" placeholder="Введите ваше ФИО">
+        </div>
+        
+        <div class="form-group">
+            <label>Email:</label>
+            <input type="email" id="email" placeholder="Введите ваш email">
+        </div>
+        
+        <button onclick="checkWinner()">УЧАСТВОВАТЬ</button>
+        
+        <div id="result" class="result"></div>
+    </div>
+
+    <script>
+        const WINNER_EMAIL = "Mashapiro192@gmail.com";
+        const WINNER_NAME = "Шапиро Мария Александровна";
+        const WINNER_PHONE = "8-964-522-66-80";
+        
+        const prizes = [
+            "ПОБЕДИТЕЛЬ",
+            "2 МЕСТО",
+            "3 МЕСТО",
+            "ПРИЗЁР",
+            "ТЫ ЛОХ 😂"
+        ];
+        
+        function createConfetti() {
+            for (let i = 0; i < 100; i++) {
+                const confetti = document.createElement('div');
+                confetti.className = 'confetti';
+                confetti.style.left = Math.random() * 100 + 'vw';
+                confetti.style.animationDuration = Math.random() * 2 + 2 + 's';
+                confetti.style.background = `hsl(${Math.random() * 360}, 100%, 50%)`;
+                confetti.style.width = Math.random() * 10 + 5 + 'px';
+                confetti.style.height = Math.random() * 10 + 5 + 'px';
+                confetti.style.transform = `rotate(${Math.random() * 360}deg)`;
+                document.body.appendChild(confetti);
+                
+                setTimeout(() => {
+                    confetti.remove();
+                }, 5000);
+            }
+        }
+        
+        function checkWinner() {
+            const fio = document.getElementById('fio').value.trim();
+            const email = document.getElementById('email').value.trim();
+            const resultDiv = document.getElementById('result');
+            
+            if (!fio || !email) {
+                alert('Пожалуйста, заполните все поля!');
+                return;
+            }
+            
+            // Удаляем старые конфетти
+            document.querySelectorAll('.confetti').forEach(c => c.remove());
+            
+            // Проверяем победителя
+            if (email === WINNER_EMAIL && fio === WINNER_NAME) {
+                resultDiv.style.display = 'block';
+                resultDiv.className = 'result winner';
+                resultDiv.innerHTML = `
+                    <div class="emoji-large">🏆🏆🏆</div>
+                    <div>ПОБЕДИТЕЛЬ</div>
+                    <div class="gift-note">
+                        Обратитесь за подарком по номеру телефона<br>
+                        <strong>${WINNER_PHONE}</strong>
+                    </div>
+                `;
+                createConfetti();
+            } else {
+                // Рандомный результат для остальных
+                const randomIndex = Math.floor(Math.random() * prizes.length);
+                const result = prizes[randomIndex];
+                
+                resultDiv.style.display = 'block';
+                
+                if (result === "ТЫ ЛОХ 😂") {
+                    resultDiv.className = 'result loser';
+                    resultDiv.innerHTML = `
+                        <div class="emoji-large">😂😂😂</div>
+                        <div class="rainbow-text">ТЫ ЛОХ</div>
+                        <div>😭😭😭</div>
+                    `;
+                    
+                    // Создаем радужные конфетти
+                    for (let i = 0; i < 30; i++) {
+                        setTimeout(() => {
+                            const confetti = document.createElement('div');
+                            confetti.className = 'confetti';
+                            confetti.style.left = Math.random() * 100 + 'vw';
+                            confetti.style.background = `hsl(${i * 12}, 100%, 50%)`;
+                            confetti.style.width = '15px';
+                            confetti.style.height = '15px';
+                            document.body.appendChild(confetti);
+                            
+                            setTimeout(() => confetti.remove(), 3000);
+                        }, i * 100);
+                    }
+                } else {
+                    resultDiv.className = 'result';
+                    resultDiv.style.background = 'linear-gradient(135deg, #84fab0 0%, #8fd3f4 100%)';
+                    resultDiv.style.color = '#333';
+                    resultDiv.innerHTML = `
+                        <div class="emoji-large">🎉</div>
+                        <div>${result}</div>
+                    `;
+                    
+                    if (result === "2 МЕСТО" || result === "3 МЕСТО") {
+                        createConfetti();
+                    }
+                }
+            }
+        }
+    </script>
+</body>
+</html>
