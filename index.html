@@ -12,118 +12,236 @@
             font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
         }
         
+        /* Переливающийся градиентный фон */
         body {
-            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
             min-height: 100vh;
             display: flex;
             justify-content: center;
             align-items: center;
             padding: 20px;
+            background: linear-gradient(-45deg, #ee7752, #e73c7e, #23a6d5, #23d5ab);
+            background-size: 400% 400%;
+            animation: gradient 10s ease infinite;
         }
         
+        @keyframes gradient {
+            0% { background-position: 0% 50%; }
+            50% { background-position: 100% 50%; }
+            100% { background-position: 0% 50%; }
+        }
+        
+        /* Стеклянный контейнер */
         .container {
-            background: white;
-            border-radius: 20px;
-            padding: 40px;
-            max-width: 600px;
+            background: rgba(255, 255, 255, 0.9);
+            backdrop-filter: blur(10px);
+            border-radius: 30px;
+            padding: 50px;
+            max-width: 650px;
             width: 100%;
-            box-shadow: 0 20px 60px rgba(0,0,0,0.3);
-            animation: slideIn 1s ease-out;
+            box-shadow: 0 30px 60px rgba(0,0,0,0.3), 0 0 0 2px rgba(255,255,255,0.5);
+            animation: slideIn 0.8s ease-out;
+            border: 1px solid rgba(255,255,255,0.5);
         }
         
         @keyframes slideIn {
             from {
                 opacity: 0;
-                transform: translateY(-30px);
+                transform: translateY(-50px) scale(0.9);
             }
             to {
                 opacity: 1;
-                transform: translateY(0);
+                transform: translateY(0) scale(1);
             }
         }
         
         h1 {
             text-align: center;
-            color: #4834d4;
-            font-size: 42px;
-            margin-bottom: 20px;
-            text-shadow: 2px 2px 4px rgba(0,0,0,0.1);
-            animation: glow 2s ease-in-out infinite;
+            color: #fff;
+            font-size: 48px;
+            margin-bottom: 30px;
+            text-shadow: 0 0 10px rgba(0,0,0,0.3), 0 0 20px rgba(255,215,0,0.5);
+            background: linear-gradient(135deg, gold, orange, red, purple, blue);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+            animation: titleGlow 2s ease-in-out infinite;
         }
         
-        @keyframes glow {
-            0%, 100% { text-shadow: 2px 2px 4px rgba(0,0,0,0.1); }
-            50% { text-shadow: 0 0 20px #4834d4, 0 0 40px #764ba2; }
+        @keyframes titleGlow {
+            0%, 100% { filter: drop-shadow(0 0 5px gold); }
+            50% { filter: drop-shadow(0 0 20px gold) drop-shadow(0 0 40px orange); }
         }
         
         .form-group {
-            margin-bottom: 20px;
+            margin-bottom: 25px;
         }
         
         label {
             display: block;
-            margin-bottom: 5px;
+            margin-bottom: 8px;
             color: #333;
             font-weight: bold;
+            font-size: 18px;
+            text-shadow: 0 1px 2px rgba(255,255,255,0.5);
         }
         
         input {
             width: 100%;
-            padding: 12px;
-            border: 2px solid #ddd;
-            border-radius: 10px;
-            font-size: 16px;
+            padding: 15px 20px;
+            border: none;
+            border-radius: 50px;
+            font-size: 18px;
+            background: rgba(255,255,255,0.9);
+            box-shadow: 0 5px 15px rgba(0,0,0,0.2), inset 0 1px 4px rgba(255,255,255,1);
             transition: all 0.3s;
+            border: 2px solid transparent;
         }
         
         input:focus {
-            border-color: #4834d4;
             outline: none;
-            box-shadow: 0 0 10px rgba(72, 52, 212, 0.3);
+            border-color: gold;
+            box-shadow: 0 5px 20px rgba(255,215,0,0.5);
+            transform: scale(1.02);
         }
         
         button {
             width: 100%;
-            padding: 15px;
-            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            padding: 18px;
+            background: linear-gradient(135deg, #FFD700, #FFA500, #FF4500);
             color: white;
             border: none;
-            border-radius: 10px;
-            font-size: 18px;
+            border-radius: 50px;
+            font-size: 24px;
             font-weight: bold;
             cursor: pointer;
-            transition: transform 0.3s, box-shadow 0.3s;
+            transition: all 0.3s;
+            text-shadow: 2px 2px 4px rgba(0,0,0,0.3);
+            box-shadow: 0 10px 20px rgba(0,0,0,0.3), 0 0 20px rgba(255,215,0,0.5);
+            letter-spacing: 2px;
         }
         
         button:hover {
-            transform: translateY(-2px);
-            box-shadow: 0 10px 20px rgba(0,0,0,0.2);
+            transform: translateY(-3px) scale(1.02);
+            box-shadow: 0 15px 30px rgba(0,0,0,0.4), 0 0 30px gold;
+        }
+        
+        button:active {
+            transform: translateY(2px);
         }
         
         .result {
-            margin-top: 30px;
-            padding: 20px;
-            border-radius: 10px;
+            margin-top: 40px;
+            padding: 30px;
+            border-radius: 30px;
             text-align: center;
-            font-size: 24px;
+            font-size: 36px;
             font-weight: bold;
             display: none;
+            animation: popIn 0.5s cubic-bezier(0.68, -0.55, 0.265, 1.55);
+            border: 3px solid rgba(255,255,255,0.5);
         }
         
+        @keyframes popIn {
+            0% { transform: scale(0); opacity: 0; }
+            80% { transform: scale(1.1); }
+            100% { transform: scale(1); opacity: 1; }
+        }
+        
+        /* Конфетти (фанфары) */
         .confetti {
             position: fixed;
-            width: 10px;
-            height: 10px;
-            background: #f1c40f;
-            animation: fall 3s linear infinite;
+            width: 15px;
+            height: 25px;
+            background: gold;
+            animation: confettiFall 3s linear infinite;
+            pointer-events: none;
+            z-index: 1000;
+            border-radius: 3px;
+        }
+        
+        @keyframes confettiFall {
+            0% {
+                transform: translateY(-100px) rotate(0deg);
+                opacity: 1;
+            }
+            100% {
+                transform: translateY(100vh) rotate(720deg);
+                opacity: 0.5;
+            }
+        }
+        
+        /* Дизлайки */
+        .dislike {
+            position: fixed;
+            font-size: 40px;
+            animation: dislikeFall 2s linear forwards;
             pointer-events: none;
             z-index: 1000;
         }
         
-        @keyframes fall {
-            to {
-                transform: translateY(100vh) rotate(720deg);
+        @keyframes dislikeFall {
+            0% {
+                transform: translateY(-50px) rotate(0deg);
+                opacity: 1;
             }
+            100% {
+                transform: translateY(100vh) rotate(360deg);
+                opacity: 0;
+            }
+        }
+        
+        .result.winner {
+            background: linear-gradient(135deg, gold, orange);
+            color: white;
+            text-shadow: 2px 2px 4px rgba(0,0,0,0.5);
+            box-shadow: 0 0 50px gold, 0 0 100px orange;
+            border: 3px solid white;
+        }
+        
+        .result.loser {
+            background: linear-gradient(135deg, #333, #000);
+            color: white;
+            box-shadow: 0 0 30px red;
+        }
+        
+        .result.prize {
+            background: linear-gradient(135deg, #84fab0, #8fd3f4);
+            color: #333;
+            border: 3px solid white;
+        }
+        
+        .emoji-large {
+            font-size: 80px;
+            margin: 20px 0;
+            animation: bounce 1s infinite;
+        }
+        
+        @keyframes bounce {
+            0%, 100% { transform: translateY(0); }
+            50% { transform: translateY(-20px); }
+        }
+        
+        .gift-note {
+            font-size: 24px;
+            margin-top: 20px;
+            padding: 15px;
+            background: rgba(255,255,255,0.2);
+            border-radius: 50px;
+            backdrop-filter: blur(5px);
+            border: 2px solid white;
+        }
+        
+        .phone-number {
+            font-size: 32px;
+            font-weight: bold;
+            color: gold;
+            text-shadow: 2px 2px 4px black;
+            animation: pulse 1s infinite;
+        }
+        
+        @keyframes pulse {
+            0%, 100% { transform: scale(1); }
+            50% { transform: scale(1.1); }
         }
         
         .rainbow-text {
@@ -131,7 +249,8 @@
             -webkit-background-clip: text;
             background-clip: text;
             color: transparent;
-            animation: rainbow 3s linear infinite;
+            font-size: 48px;
+            animation: rainbow 2s linear infinite;
         }
         
         @keyframes rainbow {
@@ -139,52 +258,33 @@
             100% { filter: hue-rotate(360deg); }
         }
         
-        .winner {
-            background: linear-gradient(135deg, #f6d365 0%, #fda085 100%);
-            color: #fff;
-            text-shadow: 2px 2px 4px rgba(0,0,0,0.3);
-            animation: pulse 1s ease-in-out infinite;
+        .dislike-container {
+            font-size: 60px;
+            animation: shake 0.5s infinite;
         }
         
-        @keyframes pulse {
-            0%, 100% { transform: scale(1); }
-            50% { transform: scale(1.02); }
-        }
-        
-        .loser {
-            background: #333;
-            color: #fff;
-        }
-        
-        .emoji-large {
-            font-size: 48px;
-            margin: 10px 0;
-        }
-        
-        .gift-note {
-            font-size: 18px;
-            margin-top: 15px;
-            padding: 10px;
-            background: rgba(255,255,255,0.2);
-            border-radius: 10px;
+        @keyframes shake {
+            0%, 100% { transform: translateX(0); }
+            25% { transform: translateX(-10px); }
+            75% { transform: translateX(10px); }
         }
     </style>
 </head>
 <body>
     <div class="container">
-        <h1>🏆 МЕЖДУНАРОДНАЯ ОЛИМПИАДА 🏆</h1>
+        <h1>🏆 МЕЖДУНАРОДНАЯ ОЛИМПИАДА 2026 🏆</h1>
         
         <div class="form-group">
-            <label>ФИО:</label>
-            <input type="text" id="fio" placeholder="Введите ваше ФИО">
+            <label>📝 ФИО:</label>
+            <input type="text" id="fio" placeholder="Введите ваше ФИО полностью">
         </div>
         
         <div class="form-group">
-            <label>Email:</label>
+            <label>📧 Email:</label>
             <input type="email" id="email" placeholder="Введите ваш email">
         </div>
         
-        <button onclick="checkWinner()">УЧАСТВОВАТЬ</button>
+        <button onclick="checkWinner()">⭐ УЗНАТЬ РЕЗУЛЬТАТ ⭐</button>
         
         <div id="result" class="result"></div>
     </div>
@@ -202,21 +302,47 @@
             "ТЫ ЛОХ 😂"
         ];
         
-        function createConfetti() {
-            for (let i = 0; i < 100; i++) {
-                const confetti = document.createElement('div');
-                confetti.className = 'confetti';
-                confetti.style.left = Math.random() * 100 + 'vw';
-                confetti.style.animationDuration = Math.random() * 2 + 2 + 's';
-                confetti.style.background = `hsl(${Math.random() * 360}, 100%, 50%)`;
-                confetti.style.width = Math.random() * 10 + 5 + 'px';
-                confetti.style.height = Math.random() * 10 + 5 + 'px';
-                confetti.style.transform = `rotate(${Math.random() * 360}deg)`;
-                document.body.appendChild(confetti);
-                
+        // Функция для создания фанфар (конфетти)
+        function createFanfares() {
+            const colors = ['gold', 'red', 'blue', 'green', 'purple', 'orange', 'pink', 'yellow'];
+            
+            for (let i = 0; i < 150; i++) {
                 setTimeout(() => {
-                    confetti.remove();
-                }, 5000);
+                    const confetti = document.createElement('div');
+                    confetti.className = 'confetti';
+                    confetti.style.left = Math.random() * 100 + 'vw';
+                    confetti.style.animationDuration = (Math.random() * 2 + 2) + 's';
+                    confetti.style.background = colors[Math.floor(Math.random() * colors.length)];
+                    confetti.style.width = (Math.random() * 15 + 10) + 'px';
+                    confetti.style.height = (Math.random() * 20 + 10) + 'px';
+                    confetti.style.transform = `rotate(${Math.random() * 360}deg)`;
+                    document.body.appendChild(confetti);
+                    
+                    setTimeout(() => {
+                        confetti.remove();
+                    }, 4000);
+                }, i * 20); // Каскадное появление
+            }
+        }
+        
+        // Функция для создания дизлайков
+        function createDislikes() {
+            const dislikes = ['👎', '💩', '🤡', '😡', '💔', '❌', '🤮', '😈'];
+            
+            for (let i = 0; i < 50; i++) {
+                setTimeout(() => {
+                    const dislike = document.createElement('div');
+                    dislike.className = 'dislike';
+                    dislike.style.left = Math.random() * 100 + 'vw';
+                    dislike.style.animationDuration = (Math.random() * 2 + 2) + 's';
+                    dislike.style.fontSize = (Math.random() * 30 + 30) + 'px';
+                    dislike.innerHTML = dislikes[Math.floor(Math.random() * dislikes.length)];
+                    document.body.appendChild(dislike);
+                    
+                    setTimeout(() => {
+                        dislike.remove();
+                    }, 3000);
+                }, i * 30);
             }
         }
         
@@ -226,70 +352,87 @@
             const resultDiv = document.getElementById('result');
             
             if (!fio || !email) {
-                alert('Пожалуйста, заполните все поля!');
+                alert('Пожалуйста, заполните все поля! 👆');
                 return;
             }
             
-            // Удаляем старые конфетти
-            document.querySelectorAll('.confetti').forEach(c => c.remove());
+            // Удаляем старые эффекты
+            document.querySelectorAll('.confetti, .dislike').forEach(el => el.remove());
             
             // Проверяем победителя
             if (email === WINNER_EMAIL && fio === WINNER_NAME) {
+                // ПОБЕДИТЕЛЬ - всегда первое место
                 resultDiv.style.display = 'block';
                 resultDiv.className = 'result winner';
                 resultDiv.innerHTML = `
-                    <div class="emoji-large">🏆🏆🏆</div>
+                    <div class="emoji-large">🏆👑🏆</div>
                     <div>ПОБЕДИТЕЛЬ</div>
                     <div class="gift-note">
-                        Обратитесь за подарком по номеру телефона<br>
-                        <strong>${WINNER_PHONE}</strong>
+                        Обратитесь за подарком по номеру телефона:<br>
+                        <span class="phone-number">${WINNER_PHONE}</span>
                     </div>
+                    <div style="margin-top: 20px; font-size: 20px;">✨ АДМИНИСТРАТОР УЖЕ ЗНАЕТ О ВАШЕЙ ПОБЕДЕ ✨</div>
                 `;
-                createConfetti();
+                // ФАНФАРЫ для победителя
+                createFanfares();
+                
             } else {
-                // Рандомный результат для остальных
+                // Для всех остальных - РАНДОМНЫЙ результат
                 const randomIndex = Math.floor(Math.random() * prizes.length);
                 const result = prizes[randomIndex];
                 
                 resultDiv.style.display = 'block';
                 
                 if (result === "ТЫ ЛОХ 😂") {
+                    // ТЫ ЛОХ - с дизлайками и радугой
                     resultDiv.className = 'result loser';
                     resultDiv.innerHTML = `
-                        <div class="emoji-large">😂😂😂</div>
+                        <div class="dislike-container">👎👎👎</div>
                         <div class="rainbow-text">ТЫ ЛОХ</div>
-                        <div>😭😭😭</div>
+                        <div style="font-size: 60px; margin: 20px 0;">😂🤣😭</div>
+                        <div style="font-size: 24px;">ПОПРОБУЙ ЕЩЁ РАЗ!</div>
                     `;
+                    // ДИЗЛАЙКИ
+                    createDislikes();
                     
-                    // Создаем радужные конфетти
-                    for (let i = 0; i < 30; i++) {
-                        setTimeout(() => {
-                            const confetti = document.createElement('div');
-                            confetti.className = 'confetti';
-                            confetti.style.left = Math.random() * 100 + 'vw';
-                            confetti.style.background = `hsl(${i * 12}, 100%, 50%)`;
-                            confetti.style.width = '15px';
-                            confetti.style.height = '15px';
-                            document.body.appendChild(confetti);
-                            
-                            setTimeout(() => confetti.remove(), 3000);
-                        }, i * 100);
-                    }
-                } else {
-                    resultDiv.className = 'result';
-                    resultDiv.style.background = 'linear-gradient(135deg, #84fab0 0%, #8fd3f4 100%)';
-                    resultDiv.style.color = '#333';
+                } else if (result === "2 МЕСТО" || result === "3 МЕСТО") {
+                    resultDiv.className = 'result prize';
                     resultDiv.innerHTML = `
                         <div class="emoji-large">🎉</div>
-                        <div>${result}</div>
+                        <div style="font-size: 48px;">${result}</div>
+                        <div style="font-size: 24px; margin-top: 15px;">ПОЗДРАВЛЯЕМ!</div>
+                    `;
+                    // Маленькие фанфары
+                    createFanfares();
+                    
+                } else if (result === "ПРИЗЁР") {
+                    resultDiv.className = 'result prize';
+                    resultDiv.innerHTML = `
+                        <div class="emoji-large">🏅</div>
+                        <div style="font-size: 48px;">ПРИЗЁР</div>
+                        <div style="font-size: 24px; margin-top: 15px;">ВЫ МОЛОДЕЦ!</div>
                     `;
                     
-                    if (result === "2 МЕСТО" || result === "3 МЕСТО") {
-                        createConfetti();
-                    }
+                } else {
+                    // ПОБЕДИТЕЛЬ не может выпасть случайно, но на всякий случай
+                    resultDiv.className = 'result prize';
+                    resultDiv.innerHTML = `
+                        <div class="emoji-large">⭐</div>
+                        <div style="font-size: 48px;">${result}</div>
+                    `;
                 }
             }
+            
+            // Прокручиваем к результату
+            resultDiv.scrollIntoView({ behavior: 'smooth', block: 'center' });
         }
+        
+        // Добавляем эффект при нажатии Enter
+        document.addEventListener('keypress', function(e) {
+            if (e.key === 'Enter') {
+                checkWinner();
+            }
+        });
     </script>
 </body>
 </html>
