@@ -5,9 +5,6 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=yes">
     <title>Международная олимпиада</title>
     <style>
-        /* СТИЛИ ПОЛНОСТЬЮ ИЗ ПРЕДЫДУЩЕГО КОДА */
-        /* (вставьте сюда все стили из предыдущего сообщения) */
-        
         * {
             margin: 0;
             padding: 0;
@@ -15,14 +12,14 @@
             font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, sans-serif;
         }
         
-        /* КРАСИВЫЙ ПЕРЕЛИВАЮЩИЙСЯ ФОН для всех устройств */
+        /* КРАСИВЫЙ ПЕРЕЛИВАЮЩИЙСЯ ФОН */
         body {
             min-height: 100vh;
             min-height: -webkit-fill-available;
             display: flex;
             justify-content: center;
             align-items: center;
-            padding: 15px;
+            padding: 10px;
             background: linear-gradient(-45deg, #ee7752, #e73c7e, #23a6d5, #23d5ab, #f1c40f, #9b59b6, #e74c3c, #1abc9c);
             background-size: 400% 400%;
             animation: gradient 10s ease infinite;
@@ -41,20 +38,21 @@
             100% { background-position: 0% 50%; }
         }
         
+        /* КОНТЕЙНЕР - оптимальные отступы для мобилок */
         .container {
             background: rgba(255, 255, 255, 0.9);
             backdrop-filter: blur(10px);
             -webkit-backdrop-filter: blur(10px);
-            border-radius: 30px;
-            padding: clamp(20px, 5vw, 50px);
-            max-width: 650px;
+            border-radius: 25px;
+            padding: 20px 15px;
+            max-width: 600px;
             width: 100%;
             box-shadow: 0 20px 40px rgba(0,0,0,0.3), 0 0 0 2px rgba(255,255,255,0.5);
             animation: slideIn 0.8s ease-out;
             border: 1px solid rgba(255,255,255,0.5);
             position: relative;
             z-index: 10;
-            margin: 10px;
+            margin: 5px;
         }
         
         @keyframes slideIn {
@@ -68,10 +66,11 @@
             }
         }
         
+        /* ЗАГОЛОВОК - МЕЛЬЧЕ НА ТЕЛЕФОНЕ */
         h1 {
             text-align: center;
-            font-size: clamp(28px, 8vw, 48px);
-            margin-bottom: clamp(20px, 4vw, 30px);
+            font-size: 24px; /* Фиксированный размер для мобилок */
+            margin-bottom: 20px;
             text-shadow: 0 0 10px rgba(0,0,0,0.3), 0 0 20px rgba(255,215,0,0.5);
             background: linear-gradient(135deg, gold, orange, red, purple, blue);
             -webkit-background-clip: text;
@@ -79,7 +78,24 @@
             background-clip: text;
             animation: titleGlow 2s ease-in-out infinite;
             line-height: 1.2;
-            word-break: break-word;
+            white-space: nowrap; /* Запрещаем перенос */
+            overflow: hidden;
+            text-overflow: ellipsis;
+            padding: 0 5px;
+        }
+        
+        /* Для больших экранов */
+        @media (min-width: 768px) {
+            h1 {
+                font-size: 42px;
+                white-space: normal;
+            }
+        }
+        
+        @media (min-width: 1024px) {
+            h1 {
+                font-size: 48px;
+            }
         }
         
         @keyframes titleGlow {
@@ -87,26 +103,27 @@
             50% { filter: drop-shadow(0 0 15px gold) drop-shadow(0 0 30px orange); }
         }
         
+        /* ФОРМА - компактнее */
         .form-group {
-            margin-bottom: clamp(15px, 3vw, 25px);
+            margin-bottom: 15px;
         }
         
         label {
             display: block;
-            margin-bottom: 8px;
+            margin-bottom: 5px;
             color: #333;
             font-weight: 600;
-            font-size: clamp(14px, 4vw, 18px);
+            font-size: 14px;
             text-shadow: 0 1px 2px rgba(255,255,255,0.5);
             padding-left: 5px;
         }
         
         input {
             width: 100%;
-            padding: clamp(12px, 3vw, 18px) clamp(15px, 4vw, 25px);
+            padding: 12px 18px;
             border: none;
-            border-radius: 50px;
-            font-size: clamp(14px, 4vw, 18px);
+            border-radius: 40px;
+            font-size: 14px;
             background: rgba(255,255,255,0.95);
             box-shadow: 0 5px 15px rgba(0,0,0,0.1), inset 0 1px 4px rgba(255,255,255,1);
             transition: all 0.3s;
@@ -114,21 +131,15 @@
             -webkit-appearance: none;
         }
         
-        input:focus {
-            outline: none;
-            border-color: gold;
-            box-shadow: 0 5px 20px rgba(255,215,0,0.5);
-            transform: scale(1.02);
-        }
-        
+        /* КНОПКА - меньше на мобилке */
         button {
             width: 100%;
-            padding: clamp(15px, 4vw, 22px);
+            padding: 14px;
             background: linear-gradient(135deg, #FFD700, #FFA500, #FF4500);
             color: white;
             border: none;
-            border-radius: 50px;
-            font-size: clamp(18px, 6vw, 26px);
+            border-radius: 40px;
+            font-size: 18px;
             font-weight: bold;
             cursor: pointer;
             transition: all 0.3s;
@@ -138,21 +149,13 @@
             -webkit-tap-highlight-color: transparent;
         }
         
-        button:hover {
-            transform: translateY(-3px) scale(1.02);
-            box-shadow: 0 15px 30px rgba(0,0,0,0.4), 0 0 30px gold;
-        }
-        
-        button:active {
-            transform: translateY(2px);
-        }
-        
+        /* РЕЗУЛЬТАТ - компактнее */
         .result {
-            margin-top: clamp(25px, 5vw, 40px);
-            padding: clamp(20px, 4vw, 35px);
-            border-radius: 30px;
+            margin-top: 20px;
+            padding: 20px 15px;
+            border-radius: 25px;
             text-align: center;
-            font-size: clamp(24px, 7vw, 40px);
+            font-size: 20px;
             font-weight: bold;
             display: none;
             animation: popIn 0.5s cubic-bezier(0.68, -0.55, 0.265, 1.55);
@@ -162,21 +165,36 @@
             word-break: break-word;
         }
         
+        @media (min-width: 768px) {
+            .result {
+                font-size: 28px;
+                padding: 25px;
+            }
+        }
+        
         @keyframes popIn {
             0% { transform: scale(0); opacity: 0; }
             80% { transform: scale(1.1); }
             100% { transform: scale(1); opacity: 1; }
         }
         
+        /* Конфетти - меньше на мобилке */
         .confetti {
             position: fixed;
-            width: clamp(8px, 2vw, 15px);
-            height: clamp(12px, 3vw, 25px);
+            width: 8px;
+            height: 12px;
             background: gold;
             animation: confettiFall 3s linear infinite;
             pointer-events: none;
             z-index: 1000;
-            border-radius: 3px;
+            border-radius: 2px;
+        }
+        
+        @media (min-width: 768px) {
+            .confetti {
+                width: 12px;
+                height: 20px;
+            }
         }
         
         @keyframes confettiFall {
@@ -190,14 +208,21 @@
             }
         }
         
+        /* ПАЛЬЦЫ ВНИЗ - меньше на мобилке */
         .thumbs-down {
             position: fixed;
-            font-size: clamp(25px, 8vw, 45px);
+            font-size: 24px;
             animation: thumbsDownFall 3s linear forwards;
             pointer-events: none;
             z-index: 5;
             user-select: none;
             text-shadow: 0 0 5px rgba(0,0,0,0.5);
+        }
+        
+        @media (min-width: 768px) {
+            .thumbs-down {
+                font-size: 35px;
+            }
         }
         
         @keyframes thumbsDownFall {
@@ -211,11 +236,12 @@
             }
         }
         
+        /* Стили для результатов */
         .result.winner {
             background: linear-gradient(135deg, gold, orange);
             color: white;
             text-shadow: 2px 2px 4px rgba(0,0,0,0.5);
-            box-shadow: 0 0 50px gold, 0 0 100px orange;
+            box-shadow: 0 0 30px gold, 0 0 60px orange;
             border: 3px solid white;
         }
         
@@ -232,42 +258,66 @@
             border: 3px solid white;
         }
         
+        /* Эмодзи - адаптивные */
         .emoji-large {
-            font-size: clamp(50px, 15vw, 90px);
-            margin: 10px 0;
+            font-size: 40px;
+            margin: 5px 0;
             animation: bounce 1s infinite;
+        }
+        
+        @media (min-width: 768px) {
+            .emoji-large {
+                font-size: 70px;
+                margin: 10px 0;
+            }
         }
         
         @keyframes bounce {
             0%, 100% { transform: translateY(0); }
-            50% { transform: translateY(-15px); }
+            50% { transform: translateY(-10px); }
         }
         
+        /* Контейнер для эмодзи в "ты лох" */
         .thumbs-container {
-            font-size: clamp(40px, 12vw, 70px);
+            font-size: 35px;
             animation: shake 0.5s infinite;
+        }
+        
+        @media (min-width: 768px) {
+            .thumbs-container {
+                font-size: 60px;
+            }
         }
         
         @keyframes shake {
             0%, 100% { transform: translateX(0); }
-            25% { transform: translateX(-8px); }
-            75% { transform: translateX(8px); }
+            25% { transform: translateX(-5px); }
+            75% { transform: translateX(5px); }
         }
         
+        /* Заметка о подарке - компактнее */
         .gift-note {
-            font-size: clamp(16px, 4vw, 24px);
-            margin-top: 15px;
-            padding: clamp(10px, 3vw, 15px);
+            font-size: 14px;
+            margin-top: 12px;
+            padding: 10px;
             background: rgba(255,255,255,0.2);
-            border-radius: 50px;
+            border-radius: 40px;
             backdrop-filter: blur(5px);
             -webkit-backdrop-filter: blur(5px);
             border: 2px solid white;
             word-break: break-word;
         }
         
+        @media (min-width: 768px) {
+            .gift-note {
+                font-size: 20px;
+                padding: 15px;
+            }
+        }
+        
+        /* Номер телефона - компактнее */
         .phone-number {
-            font-size: clamp(20px, 6vw, 32px);
+            font-size: 16px;
             font-weight: bold;
             color: gold;
             text-shadow: 2px 2px 4px black;
@@ -276,19 +326,32 @@
             word-break: break-word;
         }
         
+        @media (min-width: 768px) {
+            .phone-number {
+                font-size: 28px;
+            }
+        }
+        
         @keyframes pulse {
             0%, 100% { transform: scale(1); }
             50% { transform: scale(1.1); }
         }
         
+        /* Радужный текст - компактнее */
         .rainbow-text {
             background: linear-gradient(to right, red, orange, yellow, green, blue, indigo, violet);
             -webkit-background-clip: text;
             background-clip: text;
             color: transparent;
-            font-size: clamp(32px, 10vw, 50px);
+            font-size: 28px;
             animation: rainbow 2s linear infinite;
-            line-height: 1.3;
+            line-height: 1.2;
+        }
+        
+        @media (min-width: 768px) {
+            .rainbow-text {
+                font-size: 48px;
+            }
         }
         
         @keyframes rainbow {
@@ -296,11 +359,19 @@
             100% { filter: hue-rotate(360deg); }
         }
         
+        /* Дополнительный текст */
         .small-text {
-            font-size: clamp(14px, 4vw, 18px);
-            margin-top: 10px;
+            font-size: 12px;
+            margin-top: 8px;
         }
         
+        @media (min-width: 768px) {
+            .small-text {
+                font-size: 16px;
+            }
+        }
+        
+        /* Фикс для iPhone */
         @supports (-webkit-touch-callout: none) {
             body {
                 min-height: -webkit-fill-available;
@@ -308,39 +379,57 @@
             
             input, button {
                 -webkit-appearance: none;
-                border-radius: 50px;
+                border-radius: 40px;
             }
         }
         
-        @media (max-width: 380px) {
+        /* Для очень маленьких экранов (iPhone SE) */
+        @media (max-width: 375px) {
             .container {
-                padding: 15px;
+                padding: 15px 12px;
             }
             
             h1 {
-                font-size: 24px;
-            }
-            
-            .result {
-                padding: 15px;
-            }
-            
-            .phone-number {
-                font-size: 18px;
-            }
-        }
-        
-        @media (min-width: 1024px) {
-            .container {
-                padding: 60px;
-            }
-            
-            h1 {
-                font-size: 52px;
+                font-size: 20px;
             }
             
             button {
-                font-size: 28px;
+                font-size: 16px;
+                padding: 12px;
+            }
+            
+            .result {
+                padding: 15px 10px;
+                font-size: 18px;
+            }
+            
+            .gift-note {
+                font-size: 12px;
+            }
+            
+            .phone-number {
+                font-size: 14px;
+            }
+        }
+        
+        /* Для больших экранов */
+        @media (min-width: 1024px) {
+            .container {
+                padding: 40px;
+            }
+            
+            h1 {
+                font-size: 48px;
+            }
+            
+            button {
+                font-size: 24px;
+                padding: 18px;
+            }
+            
+            .result {
+                font-size: 32px;
+                padding: 30px;
             }
         }
     </style>
@@ -365,7 +454,7 @@
     </div>
 
     <script>
-        // Данные победителя (оригинальные)
+        // Данные победителя
         const WINNER_EMAIL = "Mashapiro192@gmail.com";
         const WINNER_NAME = "Шапиро Мария Александровна";
         const WINNER_PHONE = "8-964-522-66-80";
@@ -387,7 +476,8 @@
         // Функция для создания фанфар
         function createFanfares() {
             const colors = ['gold', 'red', 'blue', 'green', 'purple', 'orange', 'pink', 'yellow'];
-            const count = window.innerWidth < 600 ? 80 : 150;
+            // Меньше конфетти на мобилке
+            const count = window.innerWidth < 600 ? 50 : 120;
             
             for (let i = 0; i < count; i++) {
                 setTimeout(() => {
@@ -396,15 +486,15 @@
                     confetti.style.left = Math.random() * 100 + 'vw';
                     confetti.style.animationDuration = (Math.random() * 2 + 2) + 's';
                     confetti.style.background = colors[Math.floor(Math.random() * colors.length)];
-                    confetti.style.width = (Math.random() * 15 + 8) + 'px';
-                    confetti.style.height = (Math.random() * 20 + 10) + 'px';
+                    confetti.style.width = (Math.random() * 8 + 5) + 'px';
+                    confetti.style.height = (Math.random() * 12 + 8) + 'px';
                     confetti.style.transform = `rotate(${Math.random() * 360}deg)`;
                     document.body.appendChild(confetti);
                     
                     setTimeout(() => {
                         confetti.remove();
                     }, 4000);
-                }, i * 15);
+                }, i * 20);
             }
         }
         
@@ -415,7 +505,8 @@
             document.body.classList.remove('loser-bg');
             document.body.classList.add('loser-bg');
             
-            const count = window.innerWidth < 600 ? 50 : 100;
+            // Меньше пальцев на мобилке
+            const count = window.innerWidth < 600 ? 30 : 70;
             
             for (let i = 0; i < count; i++) {
                 setTimeout(() => {
@@ -423,7 +514,7 @@
                     thumb.className = 'thumbs-down';
                     thumb.style.left = Math.random() * 100 + 'vw';
                     thumb.style.animationDuration = (Math.random() * 2 + 2) + 's';
-                    thumb.style.fontSize = (Math.random() * 25 + 25) + 'px';
+                    thumb.style.fontSize = (Math.random() * 15 + 20) + 'px';
                     thumb.style.opacity = Math.random() * 0.8 + 0.2;
                     thumb.innerHTML = thumbsDownEmojis[Math.floor(Math.random() * thumbsDownEmojis.length)];
                     document.body.appendChild(thumb);
@@ -431,7 +522,7 @@
                     setTimeout(() => {
                         thumb.remove();
                     }, 4000);
-                }, i * 25);
+                }, i * 30);
             }
             
             setTimeout(() => {
@@ -453,7 +544,7 @@
             document.querySelectorAll('.confetti, .thumbs-down').forEach(el => el.remove());
             document.body.classList.remove('loser-bg');
             
-            // ПРОВЕРКА ПОБЕДИТЕЛЯ БЕЗ УЧЕТА РЕГИСТРА
+            // Проверка победителя без учета регистра
             if (compareIgnoreCase(email, WINNER_EMAIL) && compareIgnoreCase(fio, WINNER_NAME)) {
                 resultDiv.style.display = 'block';
                 resultDiv.className = 'result winner';
@@ -479,7 +570,7 @@
                     resultDiv.innerHTML = `
                         <div class="thumbs-container">👎👎👎</div>
                         <div class="rainbow-text">ТЫ ЛОХ</div>
-                        <div style="font-size: clamp(40px, 15vw, 70px); margin: 10px 0;">😂🤣😭</div>
+                        <div style="font-size: clamp(30px, 10vw, 60px); margin: 5px 0;">😂🤣😭</div>
                         <div class="small-text">ПОПРОБУЙ ЕЩЁ РАЗ!</div>
                     `;
                     createThumbsDown();
@@ -488,7 +579,7 @@
                     resultDiv.className = 'result prize';
                     resultDiv.innerHTML = `
                         <div class="emoji-large">🎉</div>
-                        <div style="font-size: clamp(32px, 10vw, 48px);">${result}</div>
+                        <div style="font-size: clamp(22px, 6vw, 40px);">${result}</div>
                         <div class="small-text">ПОЗДРАВЛЯЕМ!</div>
                     `;
                     createFanfares();
@@ -497,7 +588,7 @@
                     resultDiv.className = 'result prize';
                     resultDiv.innerHTML = `
                         <div class="emoji-large">🏅</div>
-                        <div style="font-size: clamp(32px, 10vw, 48px);">ПРИЗЁР</div>
+                        <div style="font-size: clamp(22px, 6vw, 40px);">ПРИЗЁР</div>
                         <div class="small-text">ВЫ МОЛОДЕЦ!</div>
                     `;
                     
@@ -505,7 +596,7 @@
                     resultDiv.className = 'result prize';
                     resultDiv.innerHTML = `
                         <div class="emoji-large">⭐</div>
-                        <div style="font-size: clamp(32px, 10vw, 48px);">${result}</div>
+                        <div style="font-size: clamp(22px, 6vw, 40px);">${result}</div>
                     `;
                 }
             }
