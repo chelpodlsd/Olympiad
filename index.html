@@ -12,16 +12,24 @@
             font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
         }
         
-        /* Переливающийся градиентный фон */
+        /* КРАСИВЫЙ ПЕРЕЛИВАЮЩИЙСЯ ФОН (ВСЕГДА) */
         body {
             min-height: 100vh;
             display: flex;
             justify-content: center;
             align-items: center;
             padding: 20px;
-            background: linear-gradient(-45deg, #ee7752, #e73c7e, #23a6d5, #23d5ab);
+            background: linear-gradient(-45deg, #ee7752, #e73c7e, #23a6d5, #23d5ab, gold, violet, #ff6b6b, #4ecdc4);
             background-size: 400% 400%;
-            animation: gradient 10s ease infinite;
+            animation: gradient 8s ease infinite;
+            transition: background 0.5s;
+        }
+        
+        /* КРАСНЫЙ ФОН для "ты лох" (перебивает основной) */
+        body.loser-bg {
+            background: linear-gradient(-45deg, #ff0000, #cc0000, #990000, #ff3333, #ff6666);
+            background-size: 400% 400%;
+            animation: gradient 3s ease infinite;
         }
         
         @keyframes gradient {
@@ -41,6 +49,8 @@
             box-shadow: 0 30px 60px rgba(0,0,0,0.3), 0 0 0 2px rgba(255,255,255,0.5);
             animation: slideIn 0.8s ease-out;
             border: 1px solid rgba(255,255,255,0.5);
+            position: relative;
+            z-index: 10;
         }
         
         @keyframes slideIn {
@@ -139,6 +149,8 @@
             display: none;
             animation: popIn 0.5s cubic-bezier(0.68, -0.55, 0.265, 1.55);
             border: 3px solid rgba(255,255,255,0.5);
+            position: relative;
+            z-index: 20;
         }
         
         @keyframes popIn {
@@ -147,7 +159,7 @@
             100% { transform: scale(1); opacity: 1; }
         }
         
-        /* Конфетти (фанфары) */
+        /* Конфетти (фанфары) ТОЛЬКО ДЛЯ ПОБЕДИТЕЛЯ */
         .confetti {
             position: fixed;
             width: 15px;
@@ -170,18 +182,19 @@
             }
         }
         
-        /* Дизлайки */
-        .dislike {
+        /* ПАЛЬЦЫ ВНИЗ для "ты лох" */
+        .thumbs-down {
             position: fixed;
             font-size: 40px;
-            animation: dislikeFall 2s linear forwards;
+            animation: thumbsDownFall 3s linear forwards;
             pointer-events: none;
-            z-index: 1000;
+            z-index: 5;
+            user-select: none;
         }
         
-        @keyframes dislikeFall {
+        @keyframes thumbsDownFall {
             0% {
-                transform: translateY(-50px) rotate(0deg);
+                transform: translateY(-100px) rotate(0deg);
                 opacity: 1;
             }
             100% {
@@ -202,6 +215,7 @@
             background: linear-gradient(135deg, #333, #000);
             color: white;
             box-shadow: 0 0 30px red;
+            border: 3px solid red;
         }
         
         .result.prize {
@@ -258,7 +272,7 @@
             100% { filter: hue-rotate(360deg); }
         }
         
-        .dislike-container {
+        .thumbs-container {
             font-size: 60px;
             animation: shake 0.5s infinite;
         }
@@ -267,6 +281,11 @@
             0%, 100% { transform: translateX(0); }
             25% { transform: translateX(-10px); }
             75% { transform: translateX(10px); }
+        }
+        
+        /* Для модального окна результата */
+        .result.loser .rainbow-text {
+            font-size: 48px;
         }
     </style>
 </head>
@@ -302,7 +321,7 @@
             "ТЫ ЛОХ 😂"
         ];
         
-        // Функция для создания фанфар (конфетти)
+        // Функция для создания фанфар (конфетти) ТОЛЬКО ДЛЯ ПОБЕДИТЕЛЯ
         function createFanfares() {
             const colors = ['gold', 'red', 'blue', 'green', 'purple', 'orange', 'pink', 'yellow'];
             
@@ -321,29 +340,41 @@
                     setTimeout(() => {
                         confetti.remove();
                     }, 4000);
-                }, i * 20); // Каскадное появление
+                }, i * 20);
             }
         }
         
-        // Функция для создания дизлайков
-        function createDislikes() {
-            const dislikes = ['👎', '💩', '🤡', '😡', '💔', '❌', '🤮', '😈'];
+        // Функция для создания ПАЛЬЦЕВ ВНИЗ (только для "ты лох")
+        function createThumbsDown() {
+            const thumbsDownEmojis = ['👎', '👎🏼', '👎🏽', '👎🏾', '👎🏿', '👇', '😒', '💩'];
             
-            for (let i = 0; i < 50; i++) {
+            // Убираем красный фон с body перед добавлением нового
+            document.body.classList.remove('loser-bg');
+            // Добавляем красный фон
+            document.body.classList.add('loser-bg');
+            
+            // Создаем 100 пальцев вниз
+            for (let i = 0; i < 100; i++) {
                 setTimeout(() => {
-                    const dislike = document.createElement('div');
-                    dislike.className = 'dislike';
-                    dislike.style.left = Math.random() * 100 + 'vw';
-                    dislike.style.animationDuration = (Math.random() * 2 + 2) + 's';
-                    dislike.style.fontSize = (Math.random() * 30 + 30) + 'px';
-                    dislike.innerHTML = dislikes[Math.floor(Math.random() * dislikes.length)];
-                    document.body.appendChild(dislike);
+                    const thumb = document.createElement('div');
+                    thumb.className = 'thumbs-down';
+                    thumb.style.left = Math.random() * 100 + 'vw';
+                    thumb.style.animationDuration = (Math.random() * 2 + 2) + 's';
+                    thumb.style.fontSize = (Math.random() * 30 + 30) + 'px';
+                    thumb.style.opacity = Math.random() * 0.8 + 0.2;
+                    thumb.innerHTML = thumbsDownEmojis[Math.floor(Math.random() * thumbsDownEmojis.length)];
+                    document.body.appendChild(thumb);
                     
                     setTimeout(() => {
-                        dislike.remove();
-                    }, 3000);
+                        thumb.remove();
+                    }, 4000);
                 }, i * 30);
             }
+            
+            // Автоматически убираем красный фон через 5 секунд
+            setTimeout(() => {
+                document.body.classList.remove('loser-bg');
+            }, 5000);
         }
         
         function checkWinner() {
@@ -356,12 +387,13 @@
                 return;
             }
             
-            // Удаляем старые эффекты
-            document.querySelectorAll('.confetti, .dislike').forEach(el => el.remove());
+            // Удаляем старые эффекты и красный фон
+            document.querySelectorAll('.confetti, .thumbs-down').forEach(el => el.remove());
+            document.body.classList.remove('loser-bg');
             
             // Проверяем победителя
             if (email === WINNER_EMAIL && fio === WINNER_NAME) {
-                // ПОБЕДИТЕЛЬ - всегда первое место
+                // ПОБЕДИТЕЛЬ - всегда первое место с фанфарами
                 resultDiv.style.display = 'block';
                 resultDiv.className = 'result winner';
                 resultDiv.innerHTML = `
@@ -373,7 +405,7 @@
                     </div>
                     <div style="margin-top: 20px; font-size: 20px;">✨ АДМИНИСТРАТОР УЖЕ ЗНАЕТ О ВАШЕЙ ПОБЕДЕ ✨</div>
                 `;
-                // ФАНФАРЫ для победителя
+                // ТОЛЬКО ЗДЕСЬ фанфары
                 createFanfares();
                 
             } else {
@@ -384,16 +416,16 @@
                 resultDiv.style.display = 'block';
                 
                 if (result === "ТЫ ЛОХ 😂") {
-                    // ТЫ ЛОХ - с дизлайками и радугой
+                    // ТЫ ЛОХ - с пальцами вниз, красным фоном и радугой
                     resultDiv.className = 'result loser';
                     resultDiv.innerHTML = `
-                        <div class="dislike-container">👎👎👎</div>
+                        <div class="thumbs-container">👎👎👎</div>
                         <div class="rainbow-text">ТЫ ЛОХ</div>
                         <div style="font-size: 60px; margin: 20px 0;">😂🤣😭</div>
                         <div style="font-size: 24px;">ПОПРОБУЙ ЕЩЁ РАЗ!</div>
                     `;
-                    // ДИЗЛАЙКИ
-                    createDislikes();
+                    // ПАЛЬЦЫ ВНИЗ и КРАСНЫЙ ФОН
+                    createThumbsDown();
                     
                 } else if (result === "2 МЕСТО" || result === "3 МЕСТО") {
                     resultDiv.className = 'result prize';
@@ -402,7 +434,7 @@
                         <div style="font-size: 48px;">${result}</div>
                         <div style="font-size: 24px; margin-top: 15px;">ПОЗДРАВЛЯЕМ!</div>
                     `;
-                    // Маленькие фанфары
+                    // Маленькие фанфары для призеров
                     createFanfares();
                     
                 } else if (result === "ПРИЗЁР") {
@@ -414,7 +446,6 @@
                     `;
                     
                 } else {
-                    // ПОБЕДИТЕЛЬ не может выпасть случайно, но на всякий случай
                     resultDiv.className = 'result prize';
                     resultDiv.innerHTML = `
                         <div class="emoji-large">⭐</div>
